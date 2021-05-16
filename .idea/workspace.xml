@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="05a7556d-760b-4b14-ad13-6f9fcc17748b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/req.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/saved_models/tfidf_nb.pkl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/saved_models/tfidf_rfc.pkl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/saved_models/tfidf_svc.pkl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/saved_models/w2v_rfc.pkl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/saved_models/w2v_svc.pkl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/saved_models/word2vec.model" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClassicML.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ClassicML.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WEM/Scripts/python.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WEM/Scripts/pythonw.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WEM/pyvenv.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requierements.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1sD1ELsarXBnRGaw6bXQvVBJlxS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="05a7556d-760b-4b14-ad13-6f9fcc17748b" name="Default Changelist" comment="" />
+      <created>1620392237233</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1620392237233</updated>
+    </task>
+    <servers />
+  </component>
+</project>

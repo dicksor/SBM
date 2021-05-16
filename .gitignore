@@ -130,3 +130,6 @@ dmypy.json
 
 data/
 wem_env/
+
+config.json
+backend/settings.py
