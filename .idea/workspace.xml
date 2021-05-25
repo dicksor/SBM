@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="05a7556d-760b-4b14-ad13-6f9fcc17748b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/req.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/saved_models/tfidf_nb.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/saved_models/tfidf_rfc.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/saved_models/tfidf_svc.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/saved_models/w2v_rfc.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/saved_models/w2v_svc.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/saved_models/word2vec.model" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClassicML.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ClassicML.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEM/Scripts/python.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEM/Scripts/pythonw.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WEM/pyvenv.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requierements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
