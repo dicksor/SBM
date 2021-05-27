@@ -20,6 +20,7 @@ fetch(url + '/username', req_params).then(response => response.json()).then(data
 
         fetch(url + '/user_tweets', req_params).then(response => response.json()).then(data => {
 
+            console.log(data.tweets);
             for (let i = 0; i < data.tweets.length; i++) {
                 let tweet = data.tweets[i]
 

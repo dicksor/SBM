@@ -2,9 +2,14 @@ import settings
 import tweepy
 import secrets
 import numpy as np
+import joblib
+import os
+import pandas as pd
 
 from flask import Flask, request, session
 from flask_cors import CORS, cross_origin
+
+from SBM.TextProcessor import *
 
 app = Flask(__name__)
 
@@ -18,6 +23,14 @@ SESSION_TYPE = 'filesystem'
 
 CORS(app)
 cors = CORS(app, support_credentials=True)
+
+# Load SVM model
+model_svm = joblib.load(os.path.join('models','tfidf_svc.pkl'))
+
+tp = TextProcessor(remove_punctuation=True, 
+                   remove_stop_word=True, 
+                   min_word_size=2, 
+                   special_token_method=SpecialTokenMethod.PREPROCESS)
 
 def get_auth_object():
     if 'token' in session:
@@ -33,7 +46,11 @@ def get_predictions(replies):
     '''
     return (SVM, RNN, BERT)
     '''
-    return (np.ones(len(replies)), np.ones(len(replies)), np.ones(len(replies)))
+    # SVM
+    X_pre_svm = tp.fit_transform(np.array(replies))
+    y_svm = model_svm.predict(X_pre_svm)
+
+    return (y_svm, np.ones(len(replies)), np.ones(len(replies)))
 
 
 def get_replies(api, name, tweet_id):
@@ -42,11 +59,14 @@ def get_replies(api, name, tweet_id):
     '''
     replies = []
     for tweet in tweepy.Cursor(api.search,q='to:'+name, result_type='recent').items(100):
+        print(tweet.in_reply_to_status_id_str)
+        print(tweet.author.screen_name)
+        print(tweet.text)
+        print(tweet_id)
         if hasattr(tweet, 'in_reply_to_status_id_str'):
             if (tweet.in_reply_to_status_id_str==tweet_id):
                 replies.append((tweet.author.screen_name, tweet.text, tweet.created_at))
 
-    print(replies)
     return np.array(replies)
 
 @app.route('/auth', methods=['GET'])
@@ -99,8 +119,10 @@ def user_tweets():
     if auth is not None:
         result = {"tweets":[]}
         for tweet in tweepy.API(auth).me().timeline():
-            result["tweets"].append({"id":tweet.id, "text":tweet.text, "date":tweet.created_at})
+            print(tweet.id)
+            result["tweets"].append({"id":str(tweet.id), "text":tweet.text, "date":tweet.created_at})
         
+        print(result)
         return result
     else:
         return {'error':'User is not auth !'}
@@ -126,8 +148,10 @@ def retrive_bullying_tweets():
                 return {'error':'Arg not authorized ! '}
 
             print(name)
-            print(tweet_id)
+
             replies = get_replies(api, name, tweet_id)
+
+            print(replies)
 
             if len(replies) >= 1:
                 _, text, _ = zip(*replies)
