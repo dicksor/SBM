@@ -44,9 +44,6 @@ function set_verifier(x) {
     }
 }
 
-function get_max_class(reply) {
-
-}
 
 function analyse_tweet(x) {
     let tweetIdInput = document.getElementById("tweet-id-input").value
@@ -63,9 +60,12 @@ function analyse_tweet(x) {
         userParam = 'same'
     }
 
+    let table = document.getElementById("replies")
+    table.innerHTML = ""
+    document.getElementById("loader").style.display = "block"
+
+
     fetch(url + '/retrive_bullying_replies?tweet_id=' + tweetId + '&name_type=' + userParam, req_params).then(response => response.json()).then(data => {
-        let table = document.getElementById("replies")
-        table.innerHTML = ""
 
         if (data.replies != "empty") {
 
@@ -79,6 +79,8 @@ function analyse_tweet(x) {
         } else {
             table.innerHTML += "No replies for these tweet !"
         }
+
+        document.getElementById("loader").style.display = "none"
     })
 }
 

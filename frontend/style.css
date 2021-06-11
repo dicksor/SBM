@@ -11,3 +11,9 @@
     background-color: #BB2D3B;
     color: white;
 }
+
+#loader {
+    display: none;
+    margin-left: auto;
+    margin-right: auto;
+}
