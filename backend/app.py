@@ -6,6 +6,7 @@ import joblib
 import os
 import pandas as pd
 
+from keras.models import load_model
 from flask import Flask, request, session
 from flask_cors import CORS, cross_origin
 
@@ -27,6 +28,9 @@ cors = CORS(app, support_credentials=True)
 # Load SVM model
 model_svm = joblib.load(os.path.join('models','tfidf_svc.pkl'))
 
+# Load GRU model
+model_gru = load_model(os.path.join('models','model_final.h5'))
+
 tp = TextProcessor(remove_punctuation=True, 
                    remove_stop_word=True, 
                    min_word_size=2, 
@@ -47,10 +51,12 @@ def get_predictions(replies):
     return (SVM, RNN, BERT)
     '''
     # SVM
-    X_pre_svm = tp.fit_transform(np.array(replies))
-    y_svm = model_svm.predict(X_pre_svm)
+    X_pre = tp.fit_transform(np.array(replies))
 
-    return (y_svm, np.ones(len(replies)), np.ones(len(replies)))
+    y_svm = model_svm.predict(X_pre)
+    y_gru = np.where(model_gru.predict(X_pre) > 0.5, 1, 0)
+
+    return (y_svm, y_gru, np.ones(len(replies)))
 
 
 def get_replies(api, name, tweet_id):
@@ -143,7 +149,7 @@ def retrive_bullying_tweets():
                 name = tweepy.API(auth).me().screen_name
             elif name_type == 'other' : # User want analyse specific tweet
                 tweet = api.get_status(tweet_id)
-                name = tweet.user.name
+                name = tweet.user.screen_name
             else : 
                 return {'error':'Arg not authorized ! '}
 

@@ -4,8 +4,10 @@
 
 .no-bullying-reply {
     background-color: #157347;
+    color: white;
 }
 
 .bullying-reply {
     background-color: #BB2D3B;
+    color: white;
 }
