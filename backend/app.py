@@ -5,12 +5,17 @@ import numpy as np
 import joblib
 import os
 import pandas as pd
+import json
 
 from keras.models import load_model
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
+from keras_preprocessing import text
 from flask import Flask, request, session
 from flask_cors import CORS, cross_origin
 
 from SBM.TextProcessor import *
+from SBM.BERT import *
 
 app = Flask(__name__)
 
@@ -19,8 +24,9 @@ app.config['JSON_AS_ASCII'] = False
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
 
-
 SESSION_TYPE = 'filesystem'
+
+GRU_MAX_LEN = 40
 
 CORS(app)
 cors = CORS(app, support_credentials=True)
@@ -35,6 +41,17 @@ tp = TextProcessor(remove_punctuation=True,
                    remove_stop_word=True, 
                    min_word_size=2, 
                    special_token_method=SpecialTokenMethod.PREPROCESS)
+
+tokenizer = None
+with open('tokenizer.json') as f:
+    data = json.load(f)
+    tokenizer = text.tokenizer_from_json(data)
+
+# Load BERT
+tokenizer = AutoTokenizer.from_pretrained('bert-base-cased', model_max_length=140)
+
+bert_cls = SBMBertClassifier(n_epochs=5, tokenizer=tokenizer)
+
 
 def get_auth_object():
     if 'token' in session:
@@ -53,8 +70,18 @@ def get_predictions(replies):
     # SVM
     X_pre = tp.fit_transform(np.array(replies))
 
+    # GRU
+    X_pre_gru = tokenizer.texts_to_sequences(X_pre)
+    X_pre_gru = pad_sequences(X_pre_gru, padding='post', maxlen=GRU_MAX_LEN)
+
+    # BERT 
+    os.path.join('backend', 'models', 'BERT', 'checkpoint-4215')
+    pred, _ = bert_cls.test(TestDataset(X_pre, tokenizer),   os.path.join('backend', 'models', 'BERT', 'checkpoint-4215'))
+
     y_svm = model_svm.predict(X_pre)
-    y_gru = np.where(model_gru.predict(X_pre) > 0.5, 1, 0)
+    y_gru = np.where(model_gru.predict(X_pre_gru) > 0.5, 1, 0)
+    y_gru = [int(y) for y in y_gru.flatten()]
+
 
     return (y_svm, y_gru, np.ones(len(replies)))
 
@@ -64,11 +91,7 @@ def get_replies(api, name, tweet_id):
     return (author, text, date)
     '''
     replies = []
-    for tweet in tweepy.Cursor(api.search,q='to:'+name, result_type='recent').items(100):
-        print(tweet.in_reply_to_status_id_str)
-        print(tweet.author.screen_name)
-        print(tweet.text)
-        print(tweet_id)
+    for tweet in tweepy.Cursor(api.search,q='to:'+name, result_type='recent').items(250):
         if hasattr(tweet, 'in_reply_to_status_id_str'):
             if (tweet.in_reply_to_status_id_str==tweet_id):
                 replies.append((tweet.author.screen_name, tweet.text, tweet.created_at))

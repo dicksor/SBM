@@ -136,6 +136,7 @@ config.json
 backend/settings.py
 glove.6B.100d.txt/
 
-saved_models/
-backend/saved_models/
+saved_models/*
+backend/models/
 backend/glove.6B.100d.txt
+backend/tokenizer.json
