@@ -38,7 +38,7 @@ class TestDataset(torch.utils.data.Dataset):
         return item
 
     def __len__(self):
-        return 1
+        return len(self.encodings)
 
     def tokenize_tweet(self, tweet_text):
         return self.tokenizer(tweet_text, truncation=True, padding=True, max_length=140)
