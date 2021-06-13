@@ -12,8 +12,13 @@
     color: white;
 }
 
-#loader {
+#loader-span {
     display: none;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+}
+
+#loader-span {
+    font-weight: bold;
 }

@@ -20,7 +20,6 @@ fetch(url + '/username', req_params).then(response => response.json()).then(data
 
         fetch(url + '/user_tweets', req_params).then(response => response.json()).then(data => {
 
-            console.log(data.tweets);
             for (let i = 0; i < data.tweets.length; i++) {
                 let tweet = data.tweets[i]
 
@@ -62,12 +61,16 @@ function analyse_tweet(x) {
 
     let table = document.getElementById("replies")
     table.innerHTML = ""
-    document.getElementById("loader").style.display = "block"
+    document.getElementById("loader-span").style.display = "block"
 
 
     fetch(url + '/retrive_bullying_replies?tweet_id=' + tweetId + '&name_type=' + userParam, req_params).then(response => response.json()).then(data => {
 
         if (data.replies != "empty") {
+
+            if (data.tweet != '') {
+                document.getElementById('specifi-tweet-info').innerHTML += '<p><strong>Username : </strong>' + data.username + '</p><p><strong>Tweet : </strong>' + data.tweet + '</p>'
+            }
 
             for (let i = 0; i < data.replies.length; i++) {
                 let reply = data.replies[i]
@@ -80,7 +83,7 @@ function analyse_tweet(x) {
             table.innerHTML += "No replies for these tweet !"
         }
 
-        document.getElementById("loader").style.display = "none"
+        document.getElementById("loader-span").style.display = "none"
     })
 }
 
@@ -94,8 +97,23 @@ function highlight(x) {
     x.classList.add("selected")
 }
 
+function unhighlight() {
+    let tableElements = document.getElementById("tweets").children
+    for (let i = 0; i < tableElements.length; i++) {
+        tableElements[i].style.background = '#FFFFFF'
+        tableElements[i].classList.remove("selected")
+    }
+}
+
 function get_max_class(reply) {
-    let predictions = [reply.SVM, reply.RNN, reply.BERT]
+    //let predictions = [reply.SVM, reply.RNN, reply.BERT]
+    let predictions = [0, 0, 0]
     let occ = predictions.reduce((acc, curr) => (acc[curr] = (acc[curr] || 0) + 1, acc), {})
-    return (occ[0] > occ[1] ? 0 : 1)
+    if (!occ[0]) {
+        return 1
+    } else if (!occ[1]) {
+        return 0
+    } else {
+        return (occ[0] > occ[1] ? 0 : 1)
+    }
 }

@@ -44,7 +44,6 @@
         <div id="tweets-view">
             <h1>Tweets</h1>
             <p>Hello <span id="username"></span>, you are already logged !</p>
-            <input type="text" class="form-control" id="tweet-id-input" placeholder="Tweet id">
             <table class="table table-hover" data-checkbox-header="false" data-click-to-select="true">
                 <thead class="thead-dark">
                     <tr>
@@ -56,9 +55,18 @@
                 <tbody id="tweets">
                 </tbody>
             </table>
-            <button type="button" class="btn btn-primary" id="analyse-tweet-button" onclick="analyse_tweet(this);">Analyse tweet replies</button>
-            <div id="replies-container">
+
+
+            <div id="specific-tweet-container">
+                <h3>Analyse specific Tweet</h3>
+                <input type="text" class="form-control" id="tweet-id-input" placeholder="Tweet id" oninput="unhighlight()">
                 <br>
+                <div id="specifi-tweet-info"></div>
+            </div>
+            <br>
+            <button type="button" class="btn btn-primary" id="analyse-tweet-button" onclick="analyse_tweet(this);">Analyse tweet replies</button>
+            <br>
+            <div id="replies-container">
                 <h1>Replies</h1>
                 <table class="table table-hover" data-checkbox-header="false" data-click-to-select="true">
                     <thead class="thead-dark">
@@ -75,7 +83,10 @@
                     <tbody id="replies">
                     </tbody>
                 </table>
-                <img src="img/settings.gif" alt="loader" id="loader">
+                <span id="loader-span">
+                    <img src="img/settings.gif" alt="loader" id="loader">
+                    <p class="text-center">The analysis of the tweets is in progress!<br/> Please wait!</p> 
+                </span>
             </div>
         </div>
     </div>
