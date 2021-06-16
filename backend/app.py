@@ -212,7 +212,11 @@ def retrive_bullying_tweets():
             if name_type == 'same' : # User want analyse hos own tweet
                 name = tweepy.API(auth).me().screen_name
             elif name_type == 'other' : # User want analyse specific tweet
-                tweet = api.get_status(tweet_id)
+                try : 
+                    tweet = api.get_status(tweet_id)
+                except :
+                    return {'error':'Tweet id not valid ! '}
+
                 name = tweet.user.screen_name
                 display_name = tweet.user.name
                 tweet_text = tweet.text
