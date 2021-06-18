@@ -1,4 +1,10 @@
 # SBM
+## Project files
+The project in its entirety can be downloaded on the following link : https://www.swisstransfer.com/d/afb063a9-338e-44e7-afd6-545821e4a055
+
+## Report
+The report is is folder admin/
+
 ## Application setup
 First install requierements with command : ``pip install -r requierements.txt``. 
 
